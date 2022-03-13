@@ -12,16 +12,28 @@ class AddName extends StatefulWidget {
 
 class _AddNameState extends State<AddName> {
   TextEditingController textEditingController = TextEditingController();
+  bool f = true;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: (){
         FocusScope.of(context).unfocus();
+        setState(() {
+          f = true;
+        });
       },
       child: Scaffold(
        backgroundColor: Colors.white,
         appBar: AppBar(
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.gamepad),
+                onPressed: (){
+                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => Home()), (route) => false);
+                },
+            )
+          ],
           backgroundColor: Colors.purple,
           leading: IconButton(
             icon: Icon(Icons.restart_alt),
@@ -52,12 +64,20 @@ class _AddNameState extends State<AddName> {
                 child: TextField(
                   controller: textEditingController,
                   cursorColor: Colors.purple,
-                  onSubmitted: (text){
+                  onTap: (){
                     setState(() {
-                      game.names.add(textEditingController.text);
-                      textEditingController.clear();
-
+                      f = false;
                     });
+                  },
+                  // onSubmitted: (text){
+
+                  // },
+                  onEditingComplete: (){
+                      setState(() {
+                        game.names.add(textEditingController.text);
+                        textEditingController.clear();
+
+                      });
                   },
                   decoration: const InputDecoration(
                     hintText: "ex: bashar",
@@ -72,7 +92,7 @@ class _AddNameState extends State<AddName> {
               Expanded(
                 child: ListView.builder(
                   itemCount: game.names.length,
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   itemBuilder: (context , index){
                     return Holder(text: game.names[index]);
                   },
@@ -80,13 +100,6 @@ class _AddNameState extends State<AddName> {
               )
             ],
           ),
-        ),
-        floatingActionButton: FloatingActionButton(
-          backgroundColor: Colors.purple,
-          child: Icon(Icons.gamepad),
-          onPressed: (){
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (builder) => Home()), (route) => false);
-          },
         ),
       ),
     );

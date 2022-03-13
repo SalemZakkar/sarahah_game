@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:sarahah/ui/addname/add_Name.dart';
 import 'package:sarahah/ui/home/holder.dart';
@@ -12,6 +13,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  bool ch = true;
+  int t = 0;
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -61,40 +64,50 @@ class _HomeState extends State<Home> {
           showModalBottomSheet(
               context: context,
               builder: (context) {
-                return Container(
-                  height: 200,
-                  color: Colors.white38,
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        game.names[i] + "  ==>  " + game.names[j],
-                        textScaleFactor: 1.6,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      InkWell(
-                        onTap: (){
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-
-                          padding: EdgeInsets.all(15),
-                          decoration: BoxDecoration(
-                            color: Colors.purple,
-                            borderRadius: BorderRadius.circular(20)
+                return StatefulBuilder(
+                  builder: (_, setStat) {
+                    return Container(
+                      height: 200,
+                      color: Colors.white38,
+                      alignment: Alignment.center,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            game.names[i] + "  ==>  " + game.names[j],
+                            textScaleFactor: 1.6,
                           ),
-                          child: Text(
-                            "Again : - )",
-                            textScaleFactor: 1.2,
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                          // const SizedBox(
+                          //   height: 20,
+                          // ),
+                          // InkWell(
+                          //   onTap: () {
+                          //     setStat(() {
+                          //       ch = false;
+                          //       t = Random().nextInt(100);
+                          //     });
+                          //     ch = true;
+                          //   },
+                          //   child: Container(
+                          //     padding: const EdgeInsets.all(15),
+                          //     decoration: BoxDecoration(
+                          //         color: Colors.purple,
+                          //         borderRadius: BorderRadius.circular(20)),
+                          //     child: (ch ? const Text(
+                          //       "Again : - )",
+                          //       textScaleFactor: 1.2,
+                          //       style: TextStyle(color: Colors.white),
+                          //     ) :  Text(
+                          //       t.toString() + " %",
+                          //       textScaleFactor: 1.2,
+                          //       style: const TextStyle(color: Colors.white),
+                          //     )),
+                          //   ),
+                          // )
+                        ],
+                      ),
+                    );
+                  },
                 );
               });
         },
